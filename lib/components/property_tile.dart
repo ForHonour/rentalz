@@ -64,24 +64,14 @@ class PropertyTile extends StatelessWidget {
                             fontSize: 16.0,
                           ),
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              property.address.elementAt(2),
-                              style: GoogleFonts.lato(
-                                decoration: textDecoration,
-                                fontSize: 16.0,
-                              ),
-                            ),
-                            const SizedBox(width: 3.0),
-                            Text(
+                        Text(
+                          property.address.elementAt(2) +
+                              property.address.elementAt(1) +
                               property.address.last,
-                              style: GoogleFonts.lato(
-                                decoration: textDecoration,
-                                fontSize: 16.0,
-                              ),
-                            ),
-                          ],
+                          style: GoogleFonts.lato(
+                            decoration: textDecoration,
+                            fontSize: 16.0,
+                          ),
                         ),
                         const SizedBox(height: 4.0),
                         buildDate(),
