@@ -15,6 +15,7 @@ class PropertyListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final propertyItems = manager.propertyItems;
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: ListView.separated(

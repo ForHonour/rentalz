@@ -30,8 +30,14 @@ class PropertyItemScreen extends StatefulWidget {
 class _PropertyItemScreenState extends State<PropertyItemScreen> {
   final _nameController = TextEditingController();
   final _addressController = TextEditingController();
-  final _numberOfBedroomsController = TextEditingController();
+  // final _numberOfBedroomsController = TextEditingController();
   final _priceController = TextEditingController();
+
+  bool _isNameComposing = false;
+  bool _isAddressComposing = false;
+
+  // final FocusNode _nameFocusNode = FocusNode();
+  // final FocusNode _addressFocusNode = FocusNode();
 
   String _name = 'No Name';
   List<String> _address = ['No Address', '', '', ''];
@@ -67,6 +73,7 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
     @override
     void dispose() {
       _nameController.dispose();
+      _addressController.dispose();
       super.dispose();
     }
 
@@ -74,11 +81,13 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
       setState(() {
         _name = _nameController.text;
       });
+      // _nameFocusNode.requestFocus();
     });
     _addressController.addListener(() {
       setState(() {
         _addressNumber = _addressController.text;
       });
+      // _addressFocusNode.requestFocus();
     });
     super.initState();
   }
@@ -89,38 +98,47 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
       appBar: AppBar(
         actions: [
           IconButton(
-            icon: const Icon(Icons.check),
-            onPressed: () {
-              final propertyItem = PropertyItem(
-                id: widget.originalItem?.id ?? const Uuid().v1(),
-                name: _nameController.text,
-                address: [
-                  _addressController.text,
-                  _dropdownWardValue,
-                  _dropdownDistrictValue,
-                  _dropdownCityValue,
-                ],
-                type: _propertyType,
-                furniture: _furnitureType,
-                // color: _currentColor,
-                numberOfBedrooms: _currentNumberOfBedroomsValue,
-                price: _currentPriceValue,
-                date: DateTime(
-                  _dateAdded.year,
-                  _dateAdded.month,
-                  _dateAdded.day,
-                  _timeOfDay.hour,
-                  _timeOfDay.minute,
-                ),
+            icon: const Icon(
+              Icons.check,
+            ),
+            color: Colors.blue,
+            disabledColor: Colors.grey,
+            onPressed: _isNameComposing &&
+                    _isAddressComposing &&
+                    _dropdownCityValue != 'Select City' &&
+                    _currentPriceValue != 0
+                ? () {
+                    final propertyItem = PropertyItem(
+                      id: widget.originalItem?.id ?? const Uuid().v1(),
+                      name: _nameController.text,
+                      address: [
+                        _addressController.text,
+                        _dropdownWardValue,
+                        _dropdownDistrictValue,
+                        _dropdownCityValue,
+                      ],
+                      type: _propertyType,
+                      furniture: _furnitureType,
+                      // color: _currentColor,
+                      numberOfBedrooms: _currentNumberOfBedroomsValue,
+                      price: _currentPriceValue,
+                      date: DateTime(
+                        _dateAdded.year,
+                        _dateAdded.month,
+                        _dateAdded.day,
+                        _timeOfDay.hour,
+                        _timeOfDay.minute,
+                      ),
 
-                nameOfReporter: 'Khang',
-              );
-              if (widget.isUpdating) {
-                widget.onUpdate(propertyItem);
-              } else {
-                widget.onCreate(propertyItem);
-              }
-            },
+                      nameOfReporter: 'Khang',
+                    );
+                    if (widget.isUpdating) {
+                      widget.onUpdate(propertyItem);
+                    } else {
+                      widget.onCreate(propertyItem);
+                    }
+                  }
+                : null,
           ),
         ],
         elevation: 0.0,
@@ -189,14 +207,26 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'Property Name',
-          style: GoogleFonts.lato(fontSize: 24.0, fontWeight: FontWeight.bold),
+        Row(
+          children: [
+            Text(
+              'Property Name',
+              style: GoogleFonts.lato(fontSize: 24.0, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              '*',
+              style: TextStyle(fontSize: 24.0, color: Colors.red),
+            ),
+          ],
         ),
         TextField(
           controller: _nameController,
           // cursorColor: _currentColor,
-
+          onChanged: (text) {
+            setState(() {
+              _isNameComposing = text.isNotEmpty;
+            });
+          },
           decoration: InputDecoration(
             hintText: 'E.g. Đại Nam, Thuỷ Tề ...',
             enabledBorder: const UnderlineInputBorder(
@@ -218,13 +248,26 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'Property Address',
-          style: GoogleFonts.lato(fontSize: 24.0, fontWeight: FontWeight.bold),
+        Row(
+          children: [
+            Text(
+              'Property Address',
+              style: GoogleFonts.lato(fontSize: 24.0, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              '*',
+              style: TextStyle(fontSize: 24.0, color: Colors.red),
+            ),
+          ],
         ),
         TextField(
           controller: _addressController,
           // cursorColor: _currentColor,
+          onChanged: (text) {
+            setState(() {
+              _isAddressComposing = text.isNotEmpty;
+            });
+          },
           decoration: InputDecoration(
             hintText: 'E.g. 543 Hồng Bàng St.',
             enabledBorder: const UnderlineInputBorder(
@@ -242,9 +285,17 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
           children: [
             SizedBox(
               width: 70,
-              child: Text(
-                'City: ',
-                style: GoogleFonts.lato(fontSize: 18.0),
+              child: Row(
+                children: [
+                  Text(
+                    'City: ',
+                    style: GoogleFonts.lato(fontSize: 18.0),
+                  ),
+                  Text(
+                    '*',
+                    style: TextStyle(fontSize: 24.0, color: Colors.red),
+                  ),
+                ],
               ),
             ),
             const SizedBox(width: 10),
@@ -621,13 +672,12 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
           textBaseline: TextBaseline.alphabetic,
           children: [
             SizedBox(
-              width: 175,
+              width: 190,
               child: Text(
                 'Number of Bedrooms:',
                 style: GoogleFonts.lato(fontSize: 18.0),
               ),
             ),
-            const SizedBox(width: 16.0),
             SizedBox(
               width: 5,
               child: Text(
@@ -664,13 +714,20 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
           textBaseline: TextBaseline.alphabetic,
           children: [
             SizedBox(
-              width: 120,
-              child: Text(
-                'Monthly Price:',
-                style: GoogleFonts.lato(fontSize: 18.0),
+              width: 135,
+              child: Row(
+                children: [
+                  Text(
+                    'Monthly Price: ',
+                    style: GoogleFonts.lato(fontSize: 18.0),
+                  ),
+                  Text(
+                    '*',
+                    style: TextStyle(fontSize: 24.0, color: Colors.red),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(width: 16.0),
             SizedBox(
               width: 60,
               child: TextField(

@@ -17,18 +17,15 @@ class EmptyPropertyScreen extends StatelessWidget {
             Flexible(
               child: AspectRatio(
                 aspectRatio: 1 / 1,
-                // child: Image.asset('assets/fooderlich_assets/empty_list.png'),
+                child: Image.asset('assets/rentalz_pics/no-prop.png'),
               ),
             ),
+
             const Text(
-              'No Properties',
-              style: TextStyle(fontSize: 21.0),
-            ),
-            const SizedBox(height: 16.0),
-            const Text(
-              'Looking for a place to rent?\n'
-              'Tap the + button to write them down!',
+              'Looking for a place to post rental properties?\n'
+              'Tap the + button to add them here!',
               textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16.0),
             ),
             // MaterialButton(
             //   textColor: Colors.white,

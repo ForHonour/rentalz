@@ -14,7 +14,7 @@ class RentalPropertyRepository {
         date: DateTime.utc(2020, 11, 12),
         nameOfReporter: 'Nguyen Van A',
         notes: '',
-        isComplete: false,
+        isInUse: false,
       ),
       PropertyItem(
         id: '2',
@@ -27,7 +27,7 @@ class RentalPropertyRepository {
         date: DateTime.utc(2020, 11, 12),
         nameOfReporter: 'Nguyen Van B',
         notes: '',
-        isComplete: false,
+        isInUse: false,
       ),
     ];
 

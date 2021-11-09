@@ -16,11 +16,13 @@ class PropertyTile extends StatelessWidget {
     Key? key,
     required this.property,
     this.onComplete,
-  })  : textDecoration = property.isComplete ? TextDecoration.lineThrough : TextDecoration.none,
+  })  : textDecoration = property.isInUse ? TextDecoration.lineThrough : TextDecoration.none,
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    property.address
+        .removeWhere((element) => element == '' || RegExp('^Select .*').hasMatch(element));
     return SizedBox(
       height: 120.0,
       child: Row(
@@ -34,13 +36,28 @@ class PropertyTile extends StatelessWidget {
               children: [
                 SizedBox(
                   height: 30,
-                  child: Text(
-                    property.name,
-                    style: GoogleFonts.lato(
-                      decoration: textDecoration,
-                      fontSize: 25.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        property.name,
+                        style: GoogleFonts.lato(
+                          decoration: textDecoration,
+                          fontSize: 25.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      property.isInUse
+                          ? const SizedBox(
+                              width: 190,
+                              child: Text(
+                                'This item has been rented!',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            )
+                          : Container(),
+                    ],
                   ),
                 ),
                 Row(
@@ -65,9 +82,7 @@ class PropertyTile extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          property.address.elementAt(2) +
-                              property.address.elementAt(1) +
-                              property.address.last,
+                          property.address.join(', '),
                           style: GoogleFonts.lato(
                             decoration: textDecoration,
                             fontSize: 16.0,
@@ -192,7 +207,7 @@ class PropertyTile extends StatelessWidget {
 
   Widget buildCheckbox() {
     return Checkbox(
-      value: property.isComplete,
+      value: property.isInUse,
       onChanged: onComplete,
     );
   }

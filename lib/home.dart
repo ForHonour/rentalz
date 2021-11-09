@@ -32,6 +32,14 @@ class _HomeState extends State<Home> {
             'Rental Z',
             style: Theme.of(context).textTheme.headline6,
           ),
+          actions: tabManager.selectedTab == 1
+              ? [
+                  IconButton(
+                    icon: const Icon(Icons.tune),
+                    onPressed: () {},
+                  ),
+                ]
+              : null,
         ),
         body: IndexedStack(
           index: tabManager.selectedTab,

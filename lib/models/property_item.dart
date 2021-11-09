@@ -23,7 +23,7 @@ class PropertyItem {
   final DateTime date;
   final String nameOfReporter;
   final String? notes;
-  final bool isComplete;
+  final bool isInUse;
 
   const PropertyItem({
     required this.id,
@@ -36,7 +36,7 @@ class PropertyItem {
     required this.nameOfReporter,
     required this.price,
     this.notes,
-    this.isComplete = false,
+    this.isInUse = false,
   });
   // String get propertyType => describeEnum(property_type);
   // String get assetname => 'assets/images/$id-$propertyType.jpg';
@@ -56,7 +56,7 @@ class PropertyItem {
     DateTime? date,
     String? nameOfReporter,
     String? notes,
-    bool? isComplete,
+    bool? isInUse,
   }) {
     return PropertyItem(
       id: id ?? this.id,
@@ -69,7 +69,7 @@ class PropertyItem {
       date: date ?? this.date,
       nameOfReporter: nameOfReporter ?? this.nameOfReporter,
       notes: notes ?? this.notes,
-      isComplete: isComplete ?? this.isComplete,
+      isInUse: isInUse ?? this.isInUse,
     );
   }
 }

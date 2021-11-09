@@ -23,7 +23,7 @@ class PropertyManager extends ChangeNotifier {
 
   void completeProperty(int index, bool change) {
     final item = _propertyItems[index];
-    _propertyItems[index] = item.copyWith(isComplete: change);
+    _propertyItems[index] = item.copyWith(isInUse: change);
     notifyListeners();
   }
 }
