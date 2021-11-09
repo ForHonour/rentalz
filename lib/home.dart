@@ -4,6 +4,7 @@ import 'package:rentalz/models/models.dart';
 import 'package:rentalz/screens/home_screen.dart';
 import 'package:rentalz/screens/property_screen.dart';
 import 'models/managers/managers.dart';
+import 'screens/search_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({
@@ -20,7 +21,7 @@ class _HomeState extends State<Home> {
   static List<Widget> screens = [
     const HomeScreen(),
     const PropertyScreen(),
-    Container(color: Colors.blue),
+    const SearchScreen(),
   ];
 
   @override
