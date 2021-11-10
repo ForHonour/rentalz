@@ -22,7 +22,7 @@ class PropertyItem {
   final int price;
   final DateTime date;
   final String nameOfReporter;
-  final String? notes;
+  final List<String>? notes;
   final bool isInUse;
 
   const PropertyItem({
@@ -55,7 +55,7 @@ class PropertyItem {
     int? price,
     DateTime? date,
     String? nameOfReporter,
-    String? notes,
+    List<String>? notes,
     bool? isInUse,
   }) {
     return PropertyItem(

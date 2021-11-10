@@ -24,7 +24,7 @@ class PropertyTile extends StatelessWidget {
     property.address
         .removeWhere((element) => element == '' || RegExp('^Select .*').hasMatch(element));
     return SizedBox(
-      height: 120.0,
+      height: 135.0,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -74,6 +74,7 @@ class PropertyTile extends StatelessWidget {
                             buildPropertyType(),
                           ],
                         ),
+                        const SizedBox(height: 4.0),
                         Text(
                           property.numberOfBedrooms.toString() + ' bedrooms',
                           style: GoogleFonts.lato(
@@ -81,15 +82,27 @@ class PropertyTile extends StatelessWidget {
                             fontSize: 16.0,
                           ),
                         ),
-                        Text(
-                          property.address.join(', '),
-                          style: GoogleFonts.lato(
-                            decoration: textDecoration,
-                            fontSize: 16.0,
+                        const SizedBox(height: 4.0),
+                        SizedBox(
+                          width: 240,
+                          height: 38,
+                          child: Row(
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  property.address.join(', '),
+                                  style: GoogleFonts.lato(
+                                    decoration: textDecoration,
+                                    fontSize: 14.0,
+                                  ),
+                                  softWrap: true,
+                                  // overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(height: 4.0),
-                        buildDate(),
                       ],
                     ),
                     // const SizedBox(height: 4.0),
@@ -105,6 +118,12 @@ class PropertyTile extends StatelessWidget {
                         buildCheckbox(),
                       ],
                     ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    buildDate(),
                   ],
                 ),
               ],

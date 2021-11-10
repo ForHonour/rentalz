@@ -13,7 +13,7 @@ class RentalPropertyRepository {
         price: 1000,
         date: DateTime.utc(2020, 11, 12),
         nameOfReporter: 'Nguyen Van A',
-        notes: '',
+        notes: [''],
         isInUse: false,
       ),
       PropertyItem(
@@ -26,7 +26,7 @@ class RentalPropertyRepository {
         price: 2000,
         date: DateTime.utc(2020, 11, 12),
         nameOfReporter: 'Nguyen Van B',
-        notes: '',
+        notes: [''],
         isInUse: false,
       ),
     ];

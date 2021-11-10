@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rentalz/components/property_tile.dart';
@@ -32,6 +34,300 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
   final _addressController = TextEditingController();
   // final _numberOfBedroomsController = TextEditingController();
   final _priceController = TextEditingController();
+
+  final List<String> _listCity = [
+    'Select City',
+    'Thành phố Hà Nội',
+    'Tỉnh Hà Giang',
+    'Tỉnh Cao Bằng',
+    'Tỉnh Bắc Kạn',
+    'Tỉnh Tuyên Quang',
+    'Tỉnh Lào Cai',
+    'Tỉnh Điện Biên',
+    'Tỉnh Lai Châu',
+    'Tỉnh Sơn La',
+    'Tỉnh Yên Bái',
+    'Tỉnh Hoà Bình',
+    'Tỉnh Thái Nguyên',
+    'Tỉnh Lạng Sơn',
+    'Tỉnh Quảng Ninh',
+    'Tỉnh Bắc Giang',
+    'Tỉnh Phú Thọ',
+    'Tỉnh Vĩnh Phúc',
+    'Tỉnh Bắc Ninh',
+    'Tỉnh Hải Dương',
+    'Thành phố Hải Phòng',
+    'Tỉnh Hưng Yên',
+    'Tỉnh Thái Bình',
+    'Tỉnh Hà Nam',
+    'Tỉnh Nam Định',
+    'Tỉnh Ninh Bình',
+    'Tỉnh Thanh Hoá',
+    'Tỉnh Nghệ An',
+    'Tỉnh Hà Tĩnh',
+    'Tỉnh Quảng Bình',
+    'Tỉnh Quảng Trị',
+    'Tỉnh Thừa Thiên Huế',
+    'Thành phố Đà Nẵng',
+    'Tỉnh Quảng Nam',
+    'Tỉnh Quảng Ngãi',
+    'Tỉnh Bình Định',
+    'Tỉnh Phú Yên',
+    'Tỉnh Khánh Hoà',
+    'Tỉnh Ninh Thuận',
+    'Tỉnh Bình Thuận',
+    'Tỉnh Kon Tum',
+    'Tỉnh Gia Lai',
+    'Tỉnh Đắk Lắk',
+    'Tỉnh Đắk Nông',
+    'Tỉnh Lâm Đồng',
+    'Tỉnh Bình Phước',
+    'Tỉnh Tây Ninh',
+    'Tỉnh Bình Dương',
+    'Tỉnh Đồng Nai',
+    'Tỉnh Bà Rịa - Vũng Tàu',
+    'Thành phố Hồ Chí Minh',
+    'Tỉnh Long An',
+    'Tỉnh Tiền Giang',
+    'Tỉnh Bến Tre',
+    'Tỉnh Trà Vinh',
+    'Tỉnh Vĩnh Long',
+    'Tỉnh Đồng Tháp',
+    'Tỉnh An Giang',
+    'Tỉnh Kiên Giang',
+    'Thành phố Cần Thơ',
+    'Tỉnh Hậu Giang',
+    'Tỉnh Sóc Trăng',
+    'Tỉnh Bạc Liêu',
+    'Tỉnh Cà Mau',
+  ];
+
+  final List<String> _listQuanHuyen = [
+    'Select District',
+    'Quận 1',
+    'Quận 12',
+    'Quận Thủ Đức',
+    'Quận 9',
+    'Quận Gò Vấp',
+    'Quận Bình Thạnh',
+    'Quận Tân Bình',
+    'Quận Tân Phú',
+    'Quận Phú Nhuận',
+    'Quận 2',
+    'Quận 3',
+    'Quận 10',
+    'Quận 11',
+    'Quận 4',
+    'Quận 5',
+    'Quận 6',
+    'Quận 8',
+    'Quận Bình Tân',
+    'Quận 7',
+    'Huyện Củ Chi',
+    'Huyện Hóc Môn',
+    'Huyện Bình Chánh',
+    'Huyện Nhà Bè',
+    'Huyện Cần Giờ',
+  ];
+
+  final Map<String, List<String>> _mapWard = {
+    'Select District': ['Select Ward'],
+    'Quận 1': [
+      'Select Ward',
+      'Phường Tân Định',
+      'Phường Đa Kao',
+      'Phường Bến Nghé',
+      'Phường Bến Thành',
+      'Phường Nguyễn Thái Bình',
+      'Phường Phạm Ngũ Lão',
+      'Phường Cầu Ông Lãnh',
+      'Phường Cô Giang',
+      'Phường Nguyễn Cư Trinh',
+      'Phường Cầu Kho',
+    ],
+    'Quận 12': [
+      'Select Ward',
+      'Phường Thạnh Xuân',
+      'Phường Thạnh Lộc',
+      'Phường Hiệp Thành',
+      'Phường Thới An',
+      'Phường Tân Chánh Hiệp',
+      'Phường An Phú Đông',
+      'Phường Tân Thới Hiệp',
+      'Phường Trung Mỹ Tây',
+      'Phường Tân Hưng Thuận',
+      'Phường Đông Hưng Thuận',
+      'Phường Tân Thới Nhất',
+    ],
+    'Quận Thủ Đức': [
+      'Select Ward',
+      'Phường Linh Xuân',
+      'Phường Bình Chiểu',
+      'Phường Linh Trung',
+      'Phường Tam Bình',
+      'Phường Tam Phú',
+      'Phường Hiệp Bình Phước',
+      'Phường Hiệp Bình Chánh',
+      'Phường Linh Chiểu',
+      'Phường Linh Tây',
+      'Phường Linh Đông',
+      'Phường Bình Thọ',
+      'Phường Trường Thọ',
+    ],
+    'Quận 9': [
+      'Select Ward',
+      'Phường Long Bình',
+      'Phường Long Thạnh Mỹ',
+      'Phường Tân Phú',
+      'Phường Hiệp Phú',
+      'Phường Tăng Nhơn Phú A',
+      'Phường Tăng Nhơn Phú B',
+      'Phường Phước Long B',
+      'Phường Phước Long A',
+      'Phường Trường Thạnh',
+      'Phường Long Phước',
+      'Phường Long Trường',
+      'Phường Phước Bình',
+      'Phường Phú Hữu',
+    ],
+    'Quận Gò Vấp': [
+      'Select Ward',
+      'Phường 15',
+      'Phường 13',
+      'Phường 17',
+      'Phường 06',
+      'Phường 16',
+      'Phường 12',
+      'Phường 14',
+      'Phường 10',
+      'Phường 05',
+      'Phường 07',
+      'Phường 04',
+      'Phường 01',
+      'Phường 09',
+      'Phường 08',
+      'Phường 11',
+      'Phường 03',
+    ],
+    'Quận Bình Thạnh': [
+      'Select Ward',
+      'Phường 13',
+      'Phường 11',
+      'Phường 27',
+      'Phường 26',
+      'Phường 12',
+      'Phường 25',
+      'Phường 05',
+      'Phường 07',
+      'Phường 24',
+      'Phường 06',
+      'Phường 14',
+      'Phường 15',
+      'Phường 02',
+      'Phường 01',
+      'Phường 03',
+      'Phường 17',
+      'Phường 21',
+      'Phường 22',
+      'Phường 19',
+      'Phường 28',
+    ],
+    'Quận Tân Bình': [
+      'Select Ward',
+      'Phường 02',
+      'Phường 04',
+      'Phường 12',
+      'Phường 13',
+      'Phường 01',
+      'Phường 03',
+      'Phường 11',
+      'Phường 07',
+      'Phường 05',
+      'Phường 10',
+      'Phường 06',
+      'Phường 08',
+      'Phường 09',
+      'Phường 14',
+      'Phường 15',
+    ],
+    'Quận Tân Phú': [
+      'Select Ward',
+      'Phường Tân Sơn Nhì',
+      'Phường Tây Thạnh',
+      'Phường Sơn Kỳ',
+      'Phường Tân Qúy',
+      'Phường Tân Thành',
+      'Phường Phú Thọ Hoà',
+      'Phường Phú Thạnh',
+      'Phường Phú Trung',
+      'Phường Hoà Thạnh',
+      'Phường Hiệp Tân',
+      'Phường Tân Thới Hoà',
+    ],
+    'Quận Phú Nhuận': [
+      'Select Ward',
+      'Phường 04',
+      'Phường 05',
+      'Phường 09',
+      'Phường 07',
+      'Phường 03',
+      'Phường 01',
+      'Phường 02',
+      'Phường 08',
+      'Phường 15',
+      'Phường 10',
+      'Phường 11',
+      'Phường 17',
+      'Phường 14',
+      'Phường 12',
+      'Phường 13',
+    ],
+    'Quận 2': [
+      'Select Ward',
+    ],
+    'Quận 3': [
+      'Select Ward',
+    ],
+    'Quận 10': [
+      'Select Ward',
+    ],
+    'Quận 11': [
+      'Select Ward',
+    ],
+    'Quận 4': [
+      'Select Ward',
+    ],
+    'Quận 5': [
+      'Select Ward',
+    ],
+    'Quận 6': [
+      'Select Ward',
+    ],
+    'Quận 8': [
+      'Select Ward',
+    ],
+    'Quận Bình Tân': [
+      'Select Ward',
+    ],
+    'Quận 7': [
+      'Select Ward',
+    ],
+    'Huyện Củ Chi': [
+      'Select Ward',
+    ],
+    'Huyện Hóc Môn': [
+      'Select Ward',
+    ],
+    'Huyện Bình Chánh': [
+      'Select Ward',
+    ],
+    'Huyện Nhà Bè': [
+      'Select Ward',
+    ],
+    'Huyện Cần Giờ': [
+      'Select Ward',
+    ],
+  };
 
   bool _isNameComposing = false;
   bool _isAddressComposing = false;
@@ -152,16 +448,16 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
         child: ListView(
           children: [
             buildNameField(),
-            const SizedBox(height: 10.0),
+            const SizedBox(height: 4.0),
             buildAddressField(),
-            const SizedBox(height: 10.0),
+            const SizedBox(height: 4.0),
             buildPropertyTypeField(),
-            const SizedBox(height: 10.0),
+            const SizedBox(height: 4.0),
             buildFurnitureTypeField(),
-            const SizedBox(height: 10.0),
+            const SizedBox(height: 4.0),
             buildNumberOfBedroomsField(),
             buildPriceField(),
-            const SizedBox(height: 10.0),
+            const SizedBox(height: 4.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -213,7 +509,7 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
               'Property Name',
               style: GoogleFonts.lato(fontSize: 24.0, fontWeight: FontWeight.bold),
             ),
-            Text(
+            const Text(
               '*',
               style: TextStyle(fontSize: 24.0, color: Colors.red),
             ),
@@ -227,9 +523,9 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
               _isNameComposing = text.isNotEmpty;
             });
           },
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             hintText: 'E.g. Đại Nam, Thuỷ Tề ...',
-            enabledBorder: const UnderlineInputBorder(
+            enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.white),
             ),
             focusedBorder: UnderlineInputBorder(
@@ -268,9 +564,9 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
               _isAddressComposing = text.isNotEmpty;
             });
           },
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             hintText: 'E.g. 543 Hồng Bàng St.',
-            enabledBorder: const UnderlineInputBorder(
+            enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.white),
             ),
             focusedBorder: UnderlineInputBorder(
@@ -318,10 +614,11 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
                 onChanged: (String? newValue) {
                   setState(() {
                     _dropdownCityValue = newValue!;
+                    _dropdownDistrictValue = 'Select District';
+                    _dropdownWardValue = 'Select Ward';
                   });
                 },
-                items: <String>['Select City', 'One', 'Two', 'Free', 'Four']
-                    .map<DropdownMenuItem<String>>((String value) {
+                items: _listCity.map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
@@ -360,10 +657,10 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
                 onChanged: (String? newValue) {
                   setState(() {
                     _dropdownDistrictValue = newValue!;
+                    _dropdownWardValue = 'Select Ward';
                   });
                 },
-                items: <String>['Select District', 'One', 'Two', 'Free', 'Four']
-                    .map<DropdownMenuItem<String>>((String value) {
+                items: _listQuanHuyen.map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
@@ -404,8 +701,10 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
                     _dropdownWardValue = newValue!;
                   });
                 },
-                items: <String>['Select Ward', 'One', 'Two', 'Free', 'Four']
-                    .map<DropdownMenuItem<String>>((String value) {
+                items:
+                    // _dropdownDistrictValue == 'Select District' ? <String>['Select Ward'].toList() :
+                    //  <String>['Select Ward', 'One', 'Two', 'Free', 'Four']
+                    _mapWard[_dropdownDistrictValue]!.map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
