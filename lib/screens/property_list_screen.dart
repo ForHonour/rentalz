@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rentalz/components/property_tile.dart';
 
 import 'package:rentalz/models/models.dart';
+import '../sql_helper.dart';
 import 'property_item_screen.dart';
 
 class PropertyListScreen extends StatelessWidget {
@@ -33,11 +34,13 @@ class PropertyListScreen extends StatelessWidget {
                   size: 50.0,
                 ),
               ),
-              onDismissed: (direction) {
+              onDismissed: (direction) async {
                 manager.deleteProperty(index);
+                await SQLHelper.deleteItem(index);
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text('${property.name} dismissed')),
                 );
+                await SQLHelper.getItems();
               },
               child: InkWell(
                 child: PropertyTile(

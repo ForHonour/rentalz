@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rentalz/models/property_item.dart';
 
+import '../../sql_helper.dart';
+
 class PropertyManager extends ChangeNotifier {
   final _propertyItems = <PropertyItem>[];
 
@@ -16,6 +18,23 @@ class PropertyManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Future<void> addProperty(PropertyItem item) async {
+  //   _propertyItems.add(item);
+  //   notifyListeners();
+  //   await SQLHelper.createItem(
+  //     item.name,
+  //     item.address,
+  //     item.type,
+  //     item.furniture!,
+  //     item.bedrooms,
+  //     item.price,
+  //     item.date,
+  //     item.reporter,
+  //     item.rented,
+  //   );
+  //   await SQLHelper.getItems();
+  // }
+
   void updateProperty(PropertyItem item, int index) {
     _propertyItems[index] = item;
     notifyListeners();
@@ -23,7 +42,7 @@ class PropertyManager extends ChangeNotifier {
 
   void completeProperty(int index, bool change) {
     final item = _propertyItems[index];
-    _propertyItems[index] = item.copyWith(isInUse: change);
+    _propertyItems[index] = item.copyWith(rented: change);
     notifyListeners();
   }
 }

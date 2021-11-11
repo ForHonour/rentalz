@@ -1,7 +1,15 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rentalz/components/components.dart';
+import 'package:rentalz/components/custom_dropdown.dart';
+import 'package:rentalz/models/models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../sql_helper.dart';
+import 'property_item_screen.dart';
+import 'property_list_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -75,13 +83,15 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      // color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
             _buildSearchCard(),
-            // _buildRecipeLoader(context),
+            // _buildRentalLoader(context),
+            // _buildFilterScreen(),
+            // Listview PropertyTile(manager.propertyitem.id)
           ],
         ),
       ),
@@ -97,6 +107,7 @@ class _SearchScreenState extends State<SearchScreen> {
         child: Row(
           children: <Widget>[
             IconButton(
+              icon: const Icon(Icons.search),
               onPressed: () {
                 startSearch(searchTextController.text);
                 final currentFocus = FocusScope.of(context);
@@ -104,9 +115,51 @@ class _SearchScreenState extends State<SearchScreen> {
                   currentFocus.unfocus();
                 }
               },
-              icon: Icon(Icons.search),
             ),
             const SizedBox(width: 6.0),
+            Expanded(
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                      child: TextField(
+                    decoration: const InputDecoration(border: InputBorder.none, hintText: 'Search'),
+                    autofocus: false,
+                    textInputAction: TextInputAction.done,
+                    onSubmitted: (value) {
+                      if (!previousSearches.contains(value)) {
+                        previousSearches.add(value);
+                        savePreviousSearches();
+                      }
+                    },
+                    controller: searchTextController,
+                  )),
+                  PopupMenuButton<String>(
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.grey,
+                    ),
+                    onSelected: (String value) {
+                      searchTextController.text = value;
+                      startSearch(searchTextController.text);
+                    },
+                    itemBuilder: (BuildContext context) {
+                      return previousSearches.map<CustomDropdownMenuItem<String>>((String value) {
+                        return CustomDropdownMenuItem<String>(
+                          text: value,
+                          value: value,
+                          callback: () {
+                            setState(() {
+                              previousSearches.remove(value);
+                              Navigator.pop(context);
+                            });
+                          },
+                        );
+                      }).toList();
+                    },
+                  ),
+                ],
+              ),
+            ),
             // Expanded(
             //   child: Row(
             //     children: [
@@ -200,17 +253,84 @@ class _SearchScreenState extends State<SearchScreen> {
     });
   }
 
-  // Widget _buildRecipeCard(BuildContext topLevelContext, List<APIHits> hits, int index) {
-  //   final recipe = hits[index].recipe;
+  // Widget _buildRentalCard(BuildContext topLevelContext, List<APIHits> hits, int index) {
+  //   final rental = hits[index].rental;
   //   return GestureDetector(
   //     onTap: () {
   //       Navigator.push(topLevelContext, MaterialPageRoute(
   //         builder: (context) {
-  //           return const RecipeDetails();
+  //           return const RentalDetails();
   //         },
   //       ));
   //     },
-  //     child: recipeStringCard(recipe.image, recipe.label),
+  //     child: rentalStringCard(rental.image, rental.label),
+  //   );
+  // }
+
+  // Widget _buildFilterScreen() {
+  //   return Consumer<PropertyManager>(
+  //     builder: (BuildContext context, manager, Widget? child) {
+  //       final propertyItems = manager.propertyItems;
+
+  //       return Padding(
+  //         padding: const EdgeInsets.all(16.0),
+  //         child: ListView.separated(
+  //             itemBuilder: (context, index) {
+  //               final property = propertyItems[index];
+  //               return Dismissible(
+  //                 key: Key(property.id),
+  //                 direction: DismissDirection.endToStart,
+  //                 background: Container(
+  //                   color: Colors.red,
+  //                   alignment: Alignment.centerRight,
+  //                   child: Icon(
+  //                     Icons.delete_forever,
+  //                     color: Colors.white,
+  //                     size: 50.0,
+  //                   ),
+  //                 ),
+  //                 onDismissed: (direction) async {
+  //                   manager.deleteProperty(index);
+  //                   await SQLHelper.deleteItem(index);
+  //                   ScaffoldMessenger.of(context).showSnackBar(
+  //                     SnackBar(content: Text('${property.name} dismissed')),
+  //                   );
+  //                   await SQLHelper.getItems();
+  //                 },
+  //                 child: InkWell(
+  //                   child: PropertyTile(
+  //                     key: Key(property.id),
+  //                     property: property,
+  //                     onComplete: (change) {
+  //                       if (change != null) {
+  //                         manager.completeProperty(index, change);
+  //                       }
+  //                     },
+  //                   ),
+  //                   onTap: () {
+  //                     Navigator.push(
+  //                       context,
+  //                       MaterialPageRoute(
+  //                         builder: (context) => PropertyItemScreen(
+  //                           originalItem: property,
+  //                           onCreate: (property) {},
+  //                           onUpdate: (property) {
+  //                             manager.updateProperty(property, index);
+  //                             Navigator.pop(context);
+  //                           },
+  //                         ),
+  //                       ),
+  //                     );
+  //                   },
+  //                 ),
+  //               );
+  //             },
+  //             separatorBuilder: (context, index) {
+  //               return const SizedBox(height: 16.0);
+  //             },
+  //             itemCount: propertyItems.length),
+  //       );
+  //     },
   //   );
   // }
 }

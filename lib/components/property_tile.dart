@@ -16,7 +16,7 @@ class PropertyTile extends StatelessWidget {
     Key? key,
     required this.property,
     this.onComplete,
-  })  : textDecoration = property.isInUse ? TextDecoration.lineThrough : TextDecoration.none,
+  })  : textDecoration = property.rented ? TextDecoration.lineThrough : TextDecoration.none,
         super(key: key);
 
   @override
@@ -48,7 +48,7 @@ class PropertyTile extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      property.isInUse
+                      property.rented
                           ? const SizedBox(
                               width: 190,
                               child: Text(
@@ -76,7 +76,7 @@ class PropertyTile extends StatelessWidget {
                         ),
                         const SizedBox(height: 4.0),
                         Text(
-                          property.numberOfBedrooms.toString() + ' bedrooms',
+                          property.bedrooms.toString() + ' bedrooms',
                           style: GoogleFonts.lato(
                             decoration: textDecoration,
                             fontSize: 16.0,
@@ -226,7 +226,7 @@ class PropertyTile extends StatelessWidget {
 
   Widget buildCheckbox() {
     return Checkbox(
-      value: property.isInUse,
+      value: property.rented,
       onChanged: onComplete,
     );
   }

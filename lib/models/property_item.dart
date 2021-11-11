@@ -1,4 +1,5 @@
 // import 'package:flutter/painting.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 enum PropertyType {
   house,
@@ -12,18 +13,19 @@ enum FurnitureType {
   furnished,
 }
 
+// @JsonSerializable()
 class PropertyItem {
   final String id;
   final String name;
   final List<String> address;
   final PropertyType type;
   final FurnitureType? furniture;
-  final int numberOfBedrooms;
+  final int bedrooms;
   final int price;
   final DateTime date;
-  final String nameOfReporter;
+  final String reporter;
+  final bool rented;
   final List<String>? notes;
-  final bool isInUse;
 
   const PropertyItem({
     required this.id,
@@ -31,12 +33,12 @@ class PropertyItem {
     required this.address,
     required this.type,
     this.furniture,
-    required this.numberOfBedrooms,
+    required this.bedrooms,
     required this.date,
-    required this.nameOfReporter,
+    required this.reporter,
     required this.price,
     this.notes,
-    this.isInUse = false,
+    this.rented = false,
   });
   // String get propertyType => describeEnum(property_type);
   // String get assetname => 'assets/images/$id-$propertyType.jpg';
@@ -45,6 +47,7 @@ class PropertyItem {
   // String toString() {
   //   // return "$property_name (id=$id)";
   // }
+
   PropertyItem copyWith({
     String? id,
     String? propertyName,
@@ -56,7 +59,7 @@ class PropertyItem {
     DateTime? date,
     String? nameOfReporter,
     List<String>? notes,
-    bool? isInUse,
+    bool? rented,
   }) {
     return PropertyItem(
       id: id ?? this.id,
@@ -64,12 +67,12 @@ class PropertyItem {
       address: propertyAddress ?? this.address,
       type: propertyType ?? this.type,
       furniture: furnitureType ?? this.furniture,
-      numberOfBedrooms: numberOfBedrooms ?? this.numberOfBedrooms,
+      bedrooms: numberOfBedrooms ?? this.bedrooms,
       price: price ?? this.price,
       date: date ?? this.date,
-      nameOfReporter: nameOfReporter ?? this.nameOfReporter,
+      reporter: nameOfReporter ?? this.reporter,
       notes: notes ?? this.notes,
-      isInUse: isInUse ?? this.isInUse,
+      rented: rented ?? this.rented,
     );
   }
 }
