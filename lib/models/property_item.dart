@@ -1,4 +1,5 @@
 // import 'package:flutter/painting.dart';
+import 'package:intl/intl.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 enum PropertyType {
@@ -74,5 +75,54 @@ class PropertyItem {
       notes: notes ?? this.notes,
       rented: rented ?? this.rented,
     );
+  }
+
+  factory PropertyItem.fromJson(Map<String, dynamic> json) {
+    PropertyType propertyType;
+    FurnitureType furnitureType;
+
+    if (json['type'] == 'apartment') {
+      propertyType = PropertyType.apartment;
+    } else if (json['type'] == 'house') {
+      propertyType = PropertyType.house;
+    } else {
+      propertyType = PropertyType.office;
+    }
+
+    if (json['furniture'] == 'unfurnished') {
+      furnitureType = FurnitureType.unfurnished;
+    } else if (json['furniture'] == FurnitureType.halfFurnished) {
+      furnitureType = FurnitureType.halfFurnished;
+    } else {
+      furnitureType = FurnitureType.furnished;
+    }
+
+    return PropertyItem(
+      id: json['id'],
+      name: json['name'],
+      address: json['address'].split(',').toList(),
+      type: propertyType,
+      furniture: furnitureType,
+      bedrooms: json['bedrooms'],
+      price: json['rented'],
+      date: DateTime.parse(json['date']),
+      reporter: json['reporter'],
+      rented: json['rented'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'id': id,
+      'name': name,
+      'address': address.join(', '),
+      'type': type,
+      'furniture': furniture,
+      'bedrooms': bedrooms,
+      'price': price,
+      'date': DateFormat('MMMM dd h:mm a').format(date),
+      'reporter': reporter,
+      'rented': rented == false ? 0 : 1,
+    };
   }
 }

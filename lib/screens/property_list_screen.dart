@@ -35,8 +35,8 @@ class PropertyListScreen extends StatelessWidget {
                 ),
               ),
               onDismissed: (direction) async {
-                manager.deleteProperty(index);
-                await SQLHelper.deleteItem(index);
+                manager.deleteProperty(propertyItems[index].id);
+                // await SQLHelper.deleteItem(index);
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text('${property.name} dismissed')),
                 );

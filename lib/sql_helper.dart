@@ -7,16 +7,16 @@ import 'models/models.dart';
 class SQLHelper {
   static Future<void> createTables(sql.Database database) async {
     await database.execute("""CREATE TABLE properties(
-        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+        id TEXT PRIMARY KEY AUTOINCREMENT NOT NULL,
         name TEXT NOT NULL,
         address TEXT NOT NULL,
         type TEXT NOT NULL,
         furniture TEXT,
 				bedrooms INTEGER,
-				price TEXT NOT NULL,
+				price INTEGER NOT NULL,
         date TEXT NOT NULL,
         reporter TEXT NOT NULL,
-				rented INTEGER NOT NULL,
+				rented INTEGER NOT NULL
       )
       """);
 
@@ -38,6 +38,7 @@ class SQLHelper {
   }
 
   static Future<int> createItem(
+    String uuid,
     String propertyName,
     List<String> propertyAddress,
     PropertyType propertyType,
@@ -71,6 +72,7 @@ class SQLHelper {
     }
 
     final data = {
+      'id': uuid,
       'name': propertyName,
       'address': propertyAddress.join(', '),
       'type': propertyTypeString,
@@ -92,13 +94,13 @@ class SQLHelper {
     return db.query('properties', orderBy: "id");
   }
 
-  static Future<List<Map<String, dynamic>>> getItem(int id) async {
+  static Future<List<Map<String, dynamic>>> getItem(String id) async {
     final db = await SQLHelper.db();
     return db.query('properties', where: "id = ?", whereArgs: [id], limit: 1);
   }
 
   static Future<int> updateItem(
-    int id,
+    String id,
     String propertyName,
     List<String> propertyAddress,
     PropertyType propertyType,
@@ -107,32 +109,52 @@ class SQLHelper {
     int price,
     DateTime date,
     String reporter,
-    int rented,
+    bool rented,
     // List<String>? notes,
   ) async {
     final db = await SQLHelper.db();
 
+    String propertyTypeString;
+    String furnitureTypeString;
+
+    if (propertyType == PropertyType.apartment) {
+      propertyTypeString = 'apartment';
+    } else if (propertyType == PropertyType.house) {
+      propertyTypeString = 'house';
+    } else {
+      propertyTypeString = 'office';
+    }
+
+    if (furnitureType == FurnitureType.unfurnished) {
+      furnitureTypeString = 'unfurnished';
+    } else if (furnitureType == FurnitureType.halfFurnished) {
+      furnitureTypeString = 'halfFurnished';
+    } else {
+      furnitureTypeString = 'furnished';
+    }
+
     final data = {
+      'id': id,
       'name': propertyName,
       'address': propertyAddress.join(', '),
-      'type': propertyType,
-      'furniture': furnitureType,
+      'type': propertyTypeString,
+      'furniture': furnitureTypeString,
       'bedrooms': bedrooms,
       'price': price,
       'date': date.toString(),
       'reporter': reporter,
-      'rented': rented,
+      'rented': rented == false ? 0 : 1,
       // 'notes': notes,
     };
 
-    final result = await db.update('items', data, where: "id = ?", whereArgs: [id]);
+    final result = await db.update('properties', data, where: "id = ?", whereArgs: [id]);
     return result;
   }
 
-  static Future<void> deleteItem(int id) async {
+  static Future<void> deleteItem(String id) async {
     final db = await SQLHelper.db();
     try {
-      await db.delete("items", where: "id = ?", whereArgs: [id]);
+      await db.delete("properties", where: "id = ?", whereArgs: [id]);
     } catch (err) {
       debugPrint("Something went wrong when deleting an item: $err");
     }

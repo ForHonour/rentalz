@@ -565,13 +565,6 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
       _dateAdded = date;
     }
 
-    @override
-    void dispose() {
-      _nameController.dispose();
-      _addressController.dispose();
-      super.dispose();
-    }
-
     _nameController.addListener(() {
       setState(() {
         _name = _nameController.text;
@@ -585,6 +578,13 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
       // _addressFocusNode.requestFocus();
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _addressController.dispose();
+    super.dispose();
   }
 
   @override
@@ -603,6 +603,7 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
                     _dropdownCityValue != 'Select City' &&
                     _currentPriceValue != 0
                 ? () {
+                    // Create PropertyItem
                     final propertyItem = PropertyItem(
                       id: widget.originalItem?.id ?? const Uuid().v1(),
                       name: _nameController.text,
@@ -662,38 +663,38 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 buildDateField(context),
-                SizedBox(width: 50),
+                const SizedBox(width: 50),
                 buildTimeField(context),
               ],
             ),
-            const SizedBox(height: 10.0),
-            PropertyTile(
-              property: PropertyItem(
-                id: 'previewMode',
-                name: _name,
-                type: _propertyType,
-                furniture: _furnitureType,
-                address: [
-                  _addressController.text,
-                  _dropdownWardValue,
-                  _dropdownDistrictValue,
-                  _dropdownCityValue,
-                ],
-                // color: _currentColor,
-                bedrooms: _currentNumberOfBedroomsValue,
-                date: DateTime(
-                  _dateAdded.year,
-                  _dateAdded.month,
-                  _dateAdded.day,
-                  _timeOfDay.hour,
-                  _timeOfDay.minute,
-                ),
+            // const SizedBox(height: 10.0),
+            // PropertyTile(
+            //   property: PropertyItem(
+            //     id: 'previewMode',
+            //     name: _name,
+            //     type: _propertyType,
+            //     furniture: _furnitureType,
+            //     address: [
+            //       _addressController.text,
+            //       _dropdownWardValue,
+            //       _dropdownDistrictValue,
+            //       _dropdownCityValue,
+            //     ],
+            //     // color: _currentColor,
+            //     bedrooms: _currentNumberOfBedroomsValue,
+            //     date: DateTime(
+            //       _dateAdded.year,
+            //       _dateAdded.month,
+            //       _dateAdded.day,
+            //       _timeOfDay.hour,
+            //       _timeOfDay.minute,
+            //     ),
 
-                reporter: '',
-                rented: false,
-                price: _currentPriceValue,
-              ),
-            ),
+            //     reporter: '',
+            //     rented: false,
+            //     price: _currentPriceValue,
+            //   ),
+            // ),
           ],
         ),
       ),
