@@ -10,6 +10,9 @@ class SQLHelper {
         id TEXT PRIMARY KEY NOT NULL,
         name TEXT NOT NULL,
         address TEXT NOT NULL,
+				city TEXT NOT NULL,
+				district TEXT NOT NULL,
+				ward TEXT NOT NULL,
         type TEXT NOT NULL,
         furniture TEXT,
 				bedrooms INTEGER,
@@ -38,50 +41,57 @@ class SQLHelper {
   }
 
   static Future<int> createItem(
-    String uuid,
-    String propertyName,
-    List<String> propertyAddress,
-    PropertyType propertyType,
-    FurnitureType furnitureType,
-    int bedrooms,
-    int price,
-    DateTime date,
-    String reporter,
-    bool rented,
-    // List<String>? notes,
-  ) async {
+      // String uuid,
+      // String propertyName,
+      // // List<String> propertyAddress,
+      // String propertyCity,
+      // String propertyDistrict,
+      // String propertyWard,
+      // PropertyType propertyType,
+      // FurnitureType furnitureType,
+      // int bedrooms,
+      // int price,
+      // DateTime date,
+      // String reporter,
+      // bool rented,
+      // // List<String>? notes,
+
+      PropertyItem item) async {
     final db = await SQLHelper.db();
 
     String propertyTypeString;
     String furnitureTypeString;
 
-    if (propertyType == PropertyType.apartment) {
+    if (item.type == PropertyType.apartment) {
       propertyTypeString = 'apartment';
-    } else if (propertyType == PropertyType.house) {
+    } else if (item.type == PropertyType.house) {
       propertyTypeString = 'house';
     } else {
       propertyTypeString = 'office';
     }
 
-    if (furnitureType == FurnitureType.unfurnished) {
+    if (item.furniture == FurnitureType.unfurnished) {
       furnitureTypeString = 'unfurnished';
-    } else if (furnitureType == FurnitureType.halfFurnished) {
+    } else if (item.furniture == FurnitureType.halfFurnished) {
       furnitureTypeString = 'halfFurnished';
     } else {
       furnitureTypeString = 'furnished';
     }
 
     final data = {
-      'id': '\'$uuid\'',
-      'name': '\'$propertyName\'',
-      'address': '\'' + propertyAddress.join(', ') + '\'',
+      'id': '\'${item.id}\'',
+      'name': '\'${item.name}\'',
+      'address': '\'${item.address}\'',
+      'city': '\'${item.city}\'',
+      'district': '\'${item.district}\'',
+      'ward': '\'${item.ward}\'',
       'type': '\'$propertyTypeString\'',
       'furniture': '\'$furnitureTypeString\'',
-      'bedrooms': bedrooms,
-      'price': price,
-      'date': '\'' + DateFormat('MMMM dd h:mm a').format(date) + '\'',
-      'reporter': '\'$reporter\'',
-      'rented': rented == false ? 0 : 1,
+      'bedrooms': item.bedrooms,
+      'price': item.price,
+      'date': '\'' + DateFormat('MMMM dd h:mm a').format(item.date) + '\'',
+      'reporter': '\'${item.reporter}\'',
+      'rented': item.rented == false ? 0 : 1,
       // 'notes': notes,
     };
     final id =
@@ -100,54 +110,60 @@ class SQLHelper {
   }
 
   static Future<int> updateItem(
-    String id,
-    String propertyName,
-    List<String> propertyAddress,
-    PropertyType propertyType,
-    FurnitureType furnitureType,
-    int bedrooms,
-    int price,
-    DateTime date,
-    String reporter,
-    bool rented,
-    // List<String>? notes,
-  ) async {
+      // String id,
+      // String propertyName,
+      // // List<String> propertyAddress,
+      // String propertyCity,
+      // String propertyDistrict,
+      // String propertyWard,
+      // PropertyType propertyType,
+      // FurnitureType furnitureType,
+      // int bedrooms,
+      // int price,
+      // DateTime date,
+      // String reporter,
+      // bool rented,
+      // // List<String>? notes,
+      PropertyItem item) async {
     final db = await SQLHelper.db();
 
     String propertyTypeString;
     String furnitureTypeString;
 
-    if (propertyType == PropertyType.apartment) {
+    if (item.type == PropertyType.apartment) {
       propertyTypeString = 'apartment';
-    } else if (propertyType == PropertyType.house) {
+    } else if (item.type == PropertyType.house) {
       propertyTypeString = 'house';
     } else {
       propertyTypeString = 'office';
     }
 
-    if (furnitureType == FurnitureType.unfurnished) {
+    if (item.furniture == FurnitureType.unfurnished) {
       furnitureTypeString = 'unfurnished';
-    } else if (furnitureType == FurnitureType.halfFurnished) {
+    } else if (item.furniture == FurnitureType.halfFurnished) {
       furnitureTypeString = 'halfFurnished';
     } else {
       furnitureTypeString = 'furnished';
     }
 
     final data = {
-      'id': id,
-      'name': propertyName,
-      'address': propertyAddress.join(', '),
-      'type': propertyTypeString,
-      'furniture': furnitureTypeString,
-      'bedrooms': bedrooms,
-      'price': price,
-      'date': date.toString(),
-      'reporter': reporter,
-      'rented': rented == false ? 0 : 1,
+      'id': '\'${item.id}\'',
+      'name': '\'${item.name}\'',
+      'address': '\'${item.address}\'',
+      'city': '\'${item.city}\'',
+      'district': '\'${item.district}\'',
+      'ward': '\'${item.ward}\'',
+      'type': '\'$propertyTypeString\'',
+      'furniture': '\'$furnitureTypeString\'',
+      'bedrooms': item.bedrooms,
+      'price': item.price,
+      'date': '\'' + DateFormat('MMMM dd h:mm a').format(item.date) + '\'',
+      'reporter': '\'${item.reporter}\'',
+      'rented': item.rented == false ? 0 : 1,
       // 'notes': notes,
     };
 
-    final result = await db.update('properties', data, where: "id = ?", whereArgs: [id]);
+    final result = await db.update('properties', data, where: "id = ?", whereArgs: [item.id]);
     return result;
   }
 

@@ -18,7 +18,10 @@ enum FurnitureType {
 class PropertyItem {
   final String id;
   final String name;
-  final List<String> address;
+  final String address;
+  final String city;
+  final String district;
+  final String ward;
   final PropertyType type;
   final FurnitureType? furniture;
   final int bedrooms;
@@ -32,6 +35,9 @@ class PropertyItem {
     required this.id,
     required this.name,
     required this.address,
+    required this.city,
+    required this.district,
+    required this.ward,
     required this.type,
     this.furniture,
     required this.bedrooms,
@@ -51,27 +57,34 @@ class PropertyItem {
 
   PropertyItem copyWith({
     String? id,
-    String? propertyName,
-    List<String>? propertyAddress,
-    PropertyType? propertyType,
-    FurnitureType? furnitureType,
-    int? numberOfBedrooms,
+    String? name,
+    String? address,
+    // List<String>? propertyAddress,
+    String? city,
+    String? district,
+    String? ward,
+    PropertyType? type,
+    FurnitureType? furniture,
+    int? bedrooms,
     int? price,
     DateTime? date,
-    String? nameOfReporter,
+    String? reporter,
     List<String>? notes,
     bool? rented,
   }) {
     return PropertyItem(
       id: id ?? this.id,
-      name: propertyName ?? this.name,
-      address: propertyAddress ?? this.address,
-      type: propertyType ?? this.type,
-      furniture: furnitureType ?? this.furniture,
-      bedrooms: numberOfBedrooms ?? this.bedrooms,
+      name: name ?? this.name,
+      address: address ?? this.address,
+      city: city ?? this.city,
+      district: district ?? this.district,
+      ward: ward ?? this.ward,
+      type: type ?? this.type,
+      furniture: furniture ?? this.furniture,
+      bedrooms: bedrooms ?? this.bedrooms,
       price: price ?? this.price,
       date: date ?? this.date,
-      reporter: nameOfReporter ?? this.reporter,
+      reporter: reporter ?? this.reporter,
       notes: notes ?? this.notes,
       rented: rented ?? this.rented,
     );
@@ -100,7 +113,10 @@ class PropertyItem {
     return PropertyItem(
       id: json['id'],
       name: json['name'],
-      address: json['address'].split(',').toList(),
+      address: json['address'],
+      city: json['city'],
+      district: json['district'],
+      ward: json['ward'],
       type: propertyType,
       furniture: furnitureType,
       bedrooms: json['bedrooms'],
@@ -115,7 +131,10 @@ class PropertyItem {
     return <String, dynamic>{
       'id': id,
       'name': name,
-      'address': address.join(', '),
+      'address': address,
+      'city': city,
+      'district': district,
+      'ward': ward,
       'type': type,
       'furniture': furniture,
       'bedrooms': bedrooms,

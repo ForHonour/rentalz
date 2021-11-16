@@ -49,18 +49,18 @@ class PropertyManager extends ChangeNotifier {
   Future<void> addProperty(PropertyItem item) async {
     _propertyItems.add(item);
     notifyListeners();
-    await SQLHelper.createItem(
-      item.id,
-      item.name,
-      item.address,
-      item.type,
-      item.furniture!,
-      item.bedrooms,
-      item.price,
-      item.date,
-      item.reporter,
-      item.rented,
-    );
+    await SQLHelper.createItem(item
+        // item.id,
+        // item.name,
+        // item.address,
+        // item.type,
+        // item.furniture!,
+        // item.bedrooms,
+        // item.price,
+        // item.date,
+        // item.reporter,
+        // item.rented,
+        );
     // _refreshProperties();
     // await SQLHelper.getItems();
   }
@@ -69,38 +69,38 @@ class PropertyManager extends ChangeNotifier {
     _propertyItems[index] = item;
 
     notifyListeners();
-    await SQLHelper.updateItem(
-      item.id,
-      item.name,
-      item.address,
-      item.type,
-      item.furniture!,
-      item.bedrooms,
-      item.price,
-      item.date,
-      item.reporter,
-      item.rented,
-    );
+    await SQLHelper.updateItem(item
+        // item.id,
+        // item.name,
+        // item.address,
+        // item.type,
+        // item.furniture!,
+        // item.bedrooms,
+        // item.price,
+        // item.date,
+        // item.reporter,
+        // item.rented,
+        );
     // _refreshProperties();
   }
 
-  Future<void> completeProperty(String id, bool change) async {
+  Future<void> completeProperty(PropertyItem item, int index, bool change) async {
     // final item = _propertyItems[index];
-    final index = _propertyItems.indexWhere((propertyId) => propertyId.id == id);
-    _propertyItems[index] = _propertyItems[index].copyWith(rented: change);
-    // updateProperty(_propertyItems[index], index);
-    await SQLHelper.updateItem(
-      _propertyItems[index].id,
-      _propertyItems[index].name,
-      _propertyItems[index].address,
-      _propertyItems[index].type,
-      _propertyItems[index].furniture!,
-      _propertyItems[index].bedrooms,
-      _propertyItems[index].price,
-      _propertyItems[index].date,
-      _propertyItems[index].reporter,
-      _propertyItems[index].rented,
-    );
+    // final index = _propertyItems.indexWhere((propertyId) => propertyId.id == item.id);
+    _propertyItems[index] = item.copyWith(rented: change);
+
+    await SQLHelper.updateItem(item
+        // _propertyItems[index].id,
+        // _propertyItems[index].name,
+        // _propertyItems[index].address,
+        // _propertyItems[index].type,
+        // _propertyItems[index].furniture!,
+        // _propertyItems[index].bedrooms,
+        // _propertyItems[index].price,
+        // _propertyItems[index].date,
+        // _propertyItems[index].reporter,
+        // _propertyItems[index].rented,
+        );
 
     notifyListeners();
 

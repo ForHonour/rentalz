@@ -21,15 +21,17 @@ class PropertyTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    property.address
-        .removeWhere((element) => element == '' || RegExp('^Select .*').hasMatch(element));
+    // Remove empty Ward or District
+    final longAddress = <String>[property.address, property.ward, property.district, property.city];
+    longAddress.removeWhere((element) => element == '' || RegExp('^Select .*').hasMatch(element));
+
     return SizedBox(
-      height: 135.0,
+      height: 140.0,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           buildColor(),
-          const SizedBox(width: 16.0),
+          const SizedBox(width: 12.0),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,7 +92,13 @@ class PropertyTile extends StatelessWidget {
                             children: [
                               Flexible(
                                 child: Text(
-                                  property.address.join(', '),
+                                  // property.address +
+                                  //     (property.ward == 'Select Ward' ? ', ${property.ward}' : '') +
+                                  //     // (property.district == 'Select District'
+                                  //     //     ? ', ${property.district}'
+                                  //     //     : '') +
+                                  //     ', ${property.city}',
+                                  longAddress.join(', '),
                                   style: GoogleFonts.lato(
                                     decoration: textDecoration,
                                     fontSize: 14.0,

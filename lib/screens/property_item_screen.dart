@@ -7,7 +7,6 @@ import 'package:google_fonts/google_fonts.dart';
 // import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:intl/intl.dart';
 import 'package:rentalz/theme/rentalz_color.dart';
-import 'package:rentalz/theme/rentalz_color.dart';
 import 'package:uuid/uuid.dart';
 import '../models/models.dart';
 
@@ -535,34 +534,39 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
   // final FocusNode _addressFocusNode = FocusNode();
 
   String _name = 'No Name';
-  List<String> _address = ['No Address', '', '', ''];
+  // List<String> _address = ['No Address', '', '', ''];
   String _addressNumber = '';
   String _dropdownCityValue = 'Select City';
   String _dropdownDistrictValue = 'Select District';
   String _dropdownWardValue = 'Select Ward';
   PropertyType _propertyType = PropertyType.apartment;
   FurnitureType _furnitureType = FurnitureType.unfurnished;
+  int _currentNumberOfBedroomsValue = 0;
+  int _currentPriceValue = 0;
   DateTime _dateAdded = DateTime.now();
   TimeOfDay _timeOfDay = TimeOfDay.now();
   // Color _currentColor = Colors.green;
-  int _currentNumberOfBedroomsValue = 0;
-  int _currentPriceValue = 0;
 
   @override
   void initState() {
     final originalItem = widget.originalItem;
     if (originalItem != null) {
       _nameController.text = originalItem.name;
-      _name = originalItem.name;
-      _address = originalItem.address;
-      _currentNumberOfBedroomsValue = originalItem.bedrooms;
-      _currentPriceValue = originalItem.price;
+      _name = _nameController.text;
+      _addressController.text = originalItem.address;
+      _addressNumber = _addressController.text;
+      _dropdownCityValue = originalItem.city;
+      _dropdownDistrictValue = originalItem.district;
+      _dropdownWardValue = originalItem.ward;
       _propertyType = originalItem.type;
       _furnitureType = originalItem.furniture!;
+      _currentNumberOfBedroomsValue = originalItem.bedrooms;
+      _currentPriceValue = originalItem.price;
       // _currentColor = originalItem.color;
-      final date = originalItem.date;
-      _timeOfDay = TimeOfDay(hour: date.hour, minute: date.minute);
-      _dateAdded = date;
+      _dateAdded = originalItem.date;
+      _timeOfDay = TimeOfDay(hour: _dateAdded.hour, minute: _dateAdded.minute);
+      _isNameComposing = true;
+      _isAddressComposing = true;
     }
 
     _nameController.addListener(() {
@@ -606,13 +610,19 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
                     // Create PropertyItem
                     final propertyItem = PropertyItem(
                       id: widget.originalItem?.id ?? const Uuid().v1(),
-                      name: _nameController.text,
-                      address: [
-                        _addressController.text,
-                        _dropdownWardValue,
-                        _dropdownDistrictValue,
-                        _dropdownCityValue,
-                      ],
+                      // name: _nameController.text,
+                      // address: _addressController.text,
+                      name: _name,
+                      address: _addressNumber,
+                      // address: [
+                      //   _addressController.text,
+                      //   _dropdownWardValue,
+                      //   _dropdownDistrictValue,
+                      //   _dropdownCityValue,
+                      // ],
+                      city: _dropdownCityValue,
+                      district: _dropdownDistrictValue,
+                      ward: _dropdownWardValue,
                       type: _propertyType,
                       furniture: _furnitureType,
                       // color: _currentColor,
@@ -1071,7 +1081,7 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
               'Date',
               style: GoogleFonts.lato(fontSize: 28.0),
             ),
-            Text('${DateFormat('yyyy-MM-dd').format(_dateAdded)}'),
+            Text(DateFormat('yyyy-MM-dd').format(_dateAdded)),
           ],
         ),
       ],
@@ -1105,7 +1115,7 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
                   'Time',
                   style: GoogleFonts.lato(fontSize: 28.0),
                 ),
-                Text('${_timeOfDay.format(context)}'),
+                Text(_timeOfDay.format(context)),
               ],
             )
           ],
@@ -1222,10 +1232,7 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
                     'Monthly Price: ',
                     style: GoogleFonts.lato(fontSize: 18.0),
                   ),
-                  Text(
-                    '*',
-                    style: TextStyle(fontSize: 24.0, color: Colors.red),
-                  ),
+                  const Text('*', style: TextStyle(fontSize: 24.0, color: Colors.red)),
                 ],
               ),
             ),

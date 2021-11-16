@@ -48,7 +48,7 @@ class PropertyListScreen extends StatelessWidget {
                   property: property,
                   onComplete: (change) {
                     if (change != null) {
-                      manager.completeProperty(property.id, change);
+                      manager.completeProperty(property, index, change);
                     }
                   },
                 ),
