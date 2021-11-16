@@ -61,12 +61,13 @@ class PropertyManager extends ChangeNotifier {
       item.reporter,
       item.rented,
     );
-    _refreshProperties();
+    // _refreshProperties();
     // await SQLHelper.getItems();
   }
 
   Future<void> updateProperty(PropertyItem item, int index) async {
     _propertyItems[index] = item;
+
     notifyListeners();
     await SQLHelper.updateItem(
       item.id,
@@ -80,17 +81,30 @@ class PropertyManager extends ChangeNotifier {
       item.reporter,
       item.rented,
     );
-    _refreshProperties();
+    // _refreshProperties();
   }
 
-  void completeProperty(int index, bool change) {
-    final item = _propertyItems[index];
-    _propertyItems[index] = item.copyWith(rented: change);
-    updateProperty(_propertyItems[index], index);
+  Future<void> completeProperty(String id, bool change) async {
+    // final item = _propertyItems[index];
+    final index = _propertyItems.indexWhere((propertyId) => propertyId.id == id);
+    _propertyItems[index] = _propertyItems[index].copyWith(rented: change);
+    // updateProperty(_propertyItems[index], index);
+    await SQLHelper.updateItem(
+      _propertyItems[index].id,
+      _propertyItems[index].name,
+      _propertyItems[index].address,
+      _propertyItems[index].type,
+      _propertyItems[index].furniture!,
+      _propertyItems[index].bedrooms,
+      _propertyItems[index].price,
+      _propertyItems[index].date,
+      _propertyItems[index].reporter,
+      _propertyItems[index].rented,
+    );
 
     notifyListeners();
 
-    _refreshProperties();
+    // _refreshProperties();
   }
 
   Future<void> deleteProperty(String index) async {

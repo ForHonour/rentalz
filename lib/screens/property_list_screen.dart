@@ -28,7 +28,7 @@ class PropertyListScreen extends StatelessWidget {
               background: Container(
                 color: Colors.red,
                 alignment: Alignment.centerRight,
-                child: Icon(
+                child: const Icon(
                   Icons.delete_forever,
                   color: Colors.white,
                   size: 50.0,
@@ -48,7 +48,7 @@ class PropertyListScreen extends StatelessWidget {
                   property: property,
                   onComplete: (change) {
                     if (change != null) {
-                      manager.completeProperty(index, change);
+                      manager.completeProperty(property.id, change);
                     }
                   },
                 ),

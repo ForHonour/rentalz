@@ -35,7 +35,7 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
   // final _numberOfBedroomsController = TextEditingController();
   final _priceController = TextEditingController();
 
-  final List<String> _listCity = [
+  static final List<String> _listCity = [
     'Select City',
     'Thành phố Hà Nội',
     'Tỉnh Hà Giang',

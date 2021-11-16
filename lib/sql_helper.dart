@@ -7,7 +7,7 @@ import 'models/models.dart';
 class SQLHelper {
   static Future<void> createTables(sql.Database database) async {
     await database.execute("""CREATE TABLE properties(
-        id TEXT PRIMARY KEY AUTOINCREMENT NOT NULL,
+        id TEXT PRIMARY KEY NOT NULL,
         name TEXT NOT NULL,
         address TEXT NOT NULL,
         type TEXT NOT NULL,
@@ -72,15 +72,15 @@ class SQLHelper {
     }
 
     final data = {
-      'id': uuid,
-      'name': propertyName,
-      'address': propertyAddress.join(', '),
-      'type': propertyTypeString,
-      'furniture': furnitureTypeString,
+      'id': '\'$uuid\'',
+      'name': '\'$propertyName\'',
+      'address': '\'' + propertyAddress.join(', ') + '\'',
+      'type': '\'$propertyTypeString\'',
+      'furniture': '\'$furnitureTypeString\'',
       'bedrooms': bedrooms,
       'price': price,
-      'date': DateFormat('MMMM dd h:mm a').format(date),
-      'reporter': reporter,
+      'date': '\'' + DateFormat('MMMM dd h:mm a').format(date) + '\'',
+      'reporter': '\'$reporter\'',
       'rented': rented == false ? 0 : 1,
       // 'notes': notes,
     };
