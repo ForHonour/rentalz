@@ -33,6 +33,7 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
   final _addressController = TextEditingController();
   // final _numberOfBedroomsController = TextEditingController();
   final _priceController = TextEditingController();
+  final _noteController = TextEditingController();
 
   static final List<String> _listCity = [
     'Select City',
@@ -534,7 +535,6 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
   // final FocusNode _addressFocusNode = FocusNode();
 
   String _name = 'No Name';
-  // List<String> _address = ['No Address', '', '', ''];
   String _addressNumber = '';
   String _dropdownCityValue = 'Select City';
   String _dropdownDistrictValue = 'Select District';
@@ -545,6 +545,7 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
   int _currentPriceValue = 0;
   DateTime _dateAdded = DateTime.now();
   TimeOfDay _timeOfDay = TimeOfDay.now();
+  String _notes = '';
   // Color _currentColor = Colors.green;
 
   @override
@@ -565,6 +566,9 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
       // _currentColor = originalItem.color;
       _dateAdded = originalItem.date;
       _timeOfDay = TimeOfDay(hour: _dateAdded.hour, minute: _dateAdded.minute);
+      _noteController.text = originalItem.notes!;
+      _notes = _noteController.text;
+
       _isNameComposing = true;
       _isAddressComposing = true;
     }
@@ -581,6 +585,12 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
       });
       // _addressFocusNode.requestFocus();
     });
+    _noteController.addListener(() {
+      setState(() {
+        _notes = _noteController.text;
+      });
+      // _addressFocusNode.requestFocus();
+    });
     super.initState();
   }
 
@@ -588,6 +598,7 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
   void dispose() {
     _nameController.dispose();
     _addressController.dispose();
+    _noteController.dispose();
     super.dispose();
   }
 
@@ -614,12 +625,6 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
                       // address: _addressController.text,
                       name: _name,
                       address: _addressNumber,
-                      // address: [
-                      //   _addressController.text,
-                      //   _dropdownWardValue,
-                      //   _dropdownDistrictValue,
-                      //   _dropdownCityValue,
-                      // ],
                       city: _dropdownCityValue,
                       district: _dropdownDistrictValue,
                       ward: _dropdownWardValue,
@@ -637,6 +642,7 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
                       ),
 
                       reporter: 'Khang',
+                      notes: _notes,
                       rented: false,
                     );
                     if (widget.isUpdating) {
@@ -677,6 +683,41 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
                 buildTimeField(context),
               ],
             ),
+            buildNoteField(),
+            // Column(
+            //   crossAxisAlignment: CrossAxisAlignment.start,
+            //   children: [
+            //     const SizedBox(height: 12),
+            //     Text('Notes: ', style: Theme.of(context).textTheme.headline2),
+            //     const SizedBox(height: 16),
+            //     ListView.separated(
+            //       // primary: false,
+            //       shrinkWrap: true,
+            //       scrollDirection: Axis.vertical,
+            //       itemCount: _notes.length,
+            //       itemBuilder: (context, index) {
+            //         return Expanded(
+            //           child: Column(
+            //             crossAxisAlignment: CrossAxisAlignment.start,
+            //             children: [
+            //               Text(_notes[index]),
+            //               Text(
+            //                 '${_timeOfDay} mins ago',
+            //                 style: const TextStyle(fontWeight: FontWeight.w700),
+            //               ),
+            //             ],
+            //           ),
+            //         );
+            //         // return Text(_notes[index]);
+            //       },
+            //       separatorBuilder: (context, index) {
+            //         return const SizedBox(height: 16);
+            //       },
+            //     ),
+            //     const SizedBox(height: 16),
+            //   ],
+            // ),
+
             // const SizedBox(height: 10.0),
             // PropertyTile(
             //   property: PropertyItem(
@@ -1273,6 +1314,46 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
                 })
           ],
         ),
+      ],
+    );
+  }
+
+  Widget buildNoteField() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const SizedBox(height: 10.0),
+        Text(
+          'Notes',
+          style: GoogleFonts.lato(fontSize: 24.0, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 4.0),
+        Container(
+          decoration: BoxDecoration(border: Border.all(width: 1.0)),
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          child: TextField(
+            keyboardType: TextInputType.multiline,
+            maxLines: 4,
+            controller: _noteController,
+            // onChanged: (text) {
+            //   setState(() {
+            //     _isNameComposing = text.isNotEmpty;
+            //   });
+            // },
+            decoration: const InputDecoration(
+              hintText: 'E.g. great condition, 1km from schools, etc.',
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.blue),
+              ),
+              border: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.blue),
+              ),
+            ),
+          ),
+        )
       ],
     );
   }

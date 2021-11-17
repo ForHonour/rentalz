@@ -35,7 +35,9 @@ class PropertyScreen extends StatelessWidget {
   Widget buildPropertyScreen() {
     return Consumer<PropertyManager>(
       builder: (BuildContext context, manager, Widget? child) {
-        if (manager.propertyItems.isNotEmpty) {
+        manager.refreshProperties();
+
+        if (manager.propertyItems.isNotEmpty && !manager.isLoading) {
           return PropertyListScreen(manager: manager);
         } else {
           return const EmptyPropertyScreen();

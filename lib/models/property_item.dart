@@ -29,7 +29,7 @@ class PropertyItem {
   final DateTime date;
   final String reporter;
   final bool rented;
-  final List<String>? notes;
+  final String? notes;
 
   const PropertyItem({
     required this.id,
@@ -69,7 +69,7 @@ class PropertyItem {
     int? price,
     DateTime? date,
     String? reporter,
-    List<String>? notes,
+    String? notes,
     bool? rented,
   }) {
     return PropertyItem(
@@ -120,10 +120,12 @@ class PropertyItem {
       type: propertyType,
       furniture: furnitureType,
       bedrooms: json['bedrooms'],
-      price: json['rented'],
-      date: DateTime.parse(json['date']),
+      price: json['price'],
+      // date: DateTime.parse(json['date']),
+      date: DateFormat('yyyy-MM-dd').parse(json['date']),
       reporter: json['reporter'],
-      rented: json['rented'],
+      notes: json['notes'],
+      rented: json['rented'] == 0 ? false : true,
     );
   }
 
@@ -139,7 +141,7 @@ class PropertyItem {
       'furniture': furniture,
       'bedrooms': bedrooms,
       'price': price,
-      'date': DateFormat('MMMM dd h:mm a').format(date),
+      'date': DateFormat('yyyy-MM-dd').format(date),
       'reporter': reporter,
       'rented': rented == false ? 0 : 1,
     };

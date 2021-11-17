@@ -26,7 +26,7 @@ class PropertyTile extends StatelessWidget {
     longAddress.removeWhere((element) => element == '' || RegExp('^Select .*').hasMatch(element));
 
     return SizedBox(
-      height: 140.0,
+      height: 180.0,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -52,7 +52,7 @@ class PropertyTile extends StatelessWidget {
                       ),
                       property.rented
                           ? const SizedBox(
-                              width: 190,
+                              width: 186,
                               child: Text(
                                 'This item has been rented!',
                                 style: TextStyle(color: Colors.red),
@@ -128,6 +128,7 @@ class PropertyTile extends StatelessWidget {
                     ),
                   ],
                 ),
+                buildNote(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -236,6 +237,24 @@ class PropertyTile extends StatelessWidget {
     return Checkbox(
       value: property.rented,
       onChanged: onComplete,
+    );
+  }
+
+  Widget buildNote() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Notes',
+          style: GoogleFonts.lato(fontSize: 18.0, fontWeight: FontWeight.bold),
+        ),
+        Text(
+          property.notes ?? 'No Comments',
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+          style: TextStyle(decoration: textDecoration),
+        ),
+      ],
     );
   }
 }

@@ -19,6 +19,7 @@ class SQLHelper {
 				price INTEGER NOT NULL,
         date TEXT NOT NULL,
         reporter TEXT NOT NULL,
+				notes TEXT NOT NULL,
 				rented INTEGER NOT NULL
       )
       """);
@@ -79,20 +80,20 @@ class SQLHelper {
     }
 
     final data = {
-      'id': '\'${item.id}\'',
-      'name': '\'${item.name}\'',
-      'address': '\'${item.address}\'',
-      'city': '\'${item.city}\'',
-      'district': '\'${item.district}\'',
-      'ward': '\'${item.ward}\'',
-      'type': '\'$propertyTypeString\'',
-      'furniture': '\'$furnitureTypeString\'',
+      'id': item.id,
+      'name': item.name,
+      'address': item.address,
+      'city': item.city,
+      'district': item.district,
+      'ward': item.ward,
+      'type': propertyTypeString,
+      'furniture': furnitureTypeString,
       'bedrooms': item.bedrooms,
       'price': item.price,
-      'date': '\'' + DateFormat('MMMM dd h:mm a').format(item.date) + '\'',
-      'reporter': '\'${item.reporter}\'',
+      'date': DateFormat('yyyy-MM-dd').format(item.date),
+      'reporter': item.reporter,
       'rented': item.rented == false ? 0 : 1,
-      // 'notes': notes,
+      'notes': item.notes,
     };
     final id =
         await db.insert('properties', data, conflictAlgorithm: sql.ConflictAlgorithm.replace);
@@ -147,20 +148,20 @@ class SQLHelper {
     }
 
     final data = {
-      'id': '\'${item.id}\'',
-      'name': '\'${item.name}\'',
-      'address': '\'${item.address}\'',
-      'city': '\'${item.city}\'',
-      'district': '\'${item.district}\'',
-      'ward': '\'${item.ward}\'',
-      'type': '\'$propertyTypeString\'',
-      'furniture': '\'$furnitureTypeString\'',
+      'id': item.id,
+      'name': item.name,
+      'address': item.address,
+      'city': item.city,
+      'district': item.district,
+      'ward': item.ward,
+      'type': propertyTypeString,
+      'furniture': furnitureTypeString,
       'bedrooms': item.bedrooms,
       'price': item.price,
-      'date': '\'' + DateFormat('MMMM dd h:mm a').format(item.date) + '\'',
-      'reporter': '\'${item.reporter}\'',
+      'date': DateFormat('yyyy-MM-dd').format(item.date),
+      'reporter': item.reporter,
       'rented': item.rented == false ? 0 : 1,
-      // 'notes': notes,
+      'notes': item.notes,
     };
 
     final result = await db.update('properties', data, where: "id = ?", whereArgs: [item.id]);
@@ -174,5 +175,21 @@ class SQLHelper {
     } catch (err) {
       debugPrint("Something went wrong when deleting an item: $err");
     }
+  }
+
+  static Future<List<Map<String, dynamic>>> searchItem(String query) async {
+    final db = await SQLHelper.db();
+    return db.query(
+      "properties",
+      where: "name LIKE ? OR address LIKE ? OR city LIKE ? OR district LIKE ? OR ward LIKE ?",
+      whereArgs: [
+        query,
+        query,
+        query,
+        query,
+        query,
+      ],
+      limit: 3,
+    );
   }
 }

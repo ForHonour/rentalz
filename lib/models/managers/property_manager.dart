@@ -4,21 +4,23 @@ import 'package:rentalz/models/property_item.dart';
 import '../../sql_helper.dart';
 
 class PropertyManager extends ChangeNotifier {
-  List<PropertyItem> _propertyItems = <PropertyItem>[];
+  final List<PropertyItem> _propertyItems = <PropertyItem>[];
+  // late List<PropertyItem> _searchedItems = [];
 
-  bool _isLoading = true;
+  bool isLoading = true;
 
   // This function is used to fetch all data from the database
-  void _refreshProperties() async {
+  void refreshProperties() async {
     final items = await SQLHelper.getItems();
     _propertyItems.clear();
     for (var item in items) {
       _propertyItems.add(PropertyItem.fromJson(item));
     }
-    _isLoading = false;
+    isLoading = false;
   }
 
   List<PropertyItem> get propertyItems => List.unmodifiable(_propertyItems);
+  // List<PropertyItem> get searchedItems => List.unmodifiable(_searchedItems);
 
   // void deleteProperty(int index) {
   //   _propertyItems.removeAt(index);
@@ -111,5 +113,27 @@ class PropertyManager extends ChangeNotifier {
     _propertyItems.removeWhere((item) => item.id == index);
     await SQLHelper.deleteItem(index);
     notifyListeners();
+  }
+
+  // Future<void> searchProperty(String query) async {
+  //   final items = await SQLHelper.searchItem(query);
+  //   notifyListeners();
+  //   _searchedItems = items.map((item) => PropertyItem.fromJson(item)).toList();
+  // }
+
+  List<PropertyItem> searchProperty(String query) {
+    final searched = _propertyItems
+        .where((item) =>
+            RegExp('^$query.*', caseSensitive: false).hasMatch(item.name) ||
+            RegExp('^$query.*', caseSensitive: false).hasMatch(item.address) ||
+            RegExp('^$query.*', caseSensitive: false).hasMatch(item.city) ||
+            RegExp('^$query.*', caseSensitive: false).hasMatch(item.district) ||
+            RegExp('^$query.*', caseSensitive: false).hasMatch(item.ward) ||
+            RegExp('^$query.*', caseSensitive: false).hasMatch(item.type.toString()) ||
+            RegExp('^$query.*', caseSensitive: false).hasMatch(item.furniture.toString()) ||
+            RegExp('^$query.*', caseSensitive: false).hasMatch(item.reporter) ||
+            RegExp('^$query.*', caseSensitive: false).hasMatch(item.notes!))
+        .toList();
+    return searched;
   }
 }

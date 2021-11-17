@@ -15,6 +15,7 @@ class PropertyListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    manager.refreshProperties();
     final propertyItems = manager.propertyItems;
 
     return Padding(
@@ -36,11 +37,10 @@ class PropertyListScreen extends StatelessWidget {
               ),
               onDismissed: (direction) async {
                 manager.deleteProperty(propertyItems[index].id);
-                // await SQLHelper.deleteItem(index);
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text('${property.name} dismissed')),
                 );
-                await SQLHelper.getItems();
+                // await SQLHelper.getItems();
               },
               child: InkWell(
                 child: PropertyTile(
