@@ -163,7 +163,7 @@ class PropertyTile extends StatelessWidget {
       return Text(
         'Unfurnished',
         style: GoogleFonts.lato(
-          color: Colors.black,
+          color: Colors.orange,
           fontWeight: FontWeight.w300,
           decoration: textDecoration,
         ),
@@ -172,7 +172,7 @@ class PropertyTile extends StatelessWidget {
       return Text(
         'Half-furnished',
         style: GoogleFonts.lato(
-          color: Colors.black,
+          color: Colors.orange,
           fontWeight: FontWeight.w400,
           decoration: textDecoration,
         ),
@@ -181,7 +181,7 @@ class PropertyTile extends StatelessWidget {
       return Text(
         'Furnished',
         style: GoogleFonts.lato(
-          color: Colors.black,
+          color: Colors.orange,
           fontWeight: FontWeight.w800,
           decoration: textDecoration,
         ),
@@ -196,7 +196,7 @@ class PropertyTile extends StatelessWidget {
       return Text(
         'Office',
         style: GoogleFonts.lato(
-          color: Colors.black,
+          color: Colors.deepOrange,
           fontWeight: FontWeight.w800,
           decoration: textDecoration,
         ),
@@ -205,7 +205,7 @@ class PropertyTile extends StatelessWidget {
       return Text(
         'Apartment',
         style: GoogleFonts.lato(
-          color: Colors.black,
+          color: Colors.deepOrange,
           fontWeight: FontWeight.w800,
           decoration: textDecoration,
         ),
@@ -214,7 +214,7 @@ class PropertyTile extends StatelessWidget {
       return Text(
         'House',
         style: GoogleFonts.lato(
-          color: Colors.black,
+          color: Colors.deepOrange,
           fontWeight: FontWeight.w800,
           decoration: textDecoration,
         ),

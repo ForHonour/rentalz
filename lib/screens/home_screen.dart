@@ -23,13 +23,13 @@ class HomeScreen extends StatelessWidget {
           title: 'App Developer',
           imageProvider: AssetImage('assets/profile_pics/khang_dark.png'),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 72),
         Text(
-          'Show Details',
+          'Details',
           style: Theme.of(context).textTheme.bodyText2,
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 8),
         Expanded(
           child: DetailsCard(),
         ),

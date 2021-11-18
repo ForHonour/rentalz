@@ -59,9 +59,18 @@ class DetailsCard extends StatelessWidget {
           decoration: BoxDecoration(border: Border.all(width: 2.0)),
           padding: const EdgeInsets.all(5.0),
           child: Text(
-            'Animated Builder',
+            'Flutter Developer',
             style: Theme.of(context).textTheme.bodyText2,
           ),
+        ),
+        const SizedBox(height: 12.0),
+        Text(
+          'Name: Khang Nghiem',
+          style: Theme.of(context).textTheme.bodyText2,
+        ),
+        Text(
+          'Hobby: Flutter Enthusiast',
+          style: Theme.of(context).textTheme.bodyText2,
         ),
       ],
     );
