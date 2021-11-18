@@ -71,18 +71,7 @@ class PropertyManager extends ChangeNotifier {
     _propertyItems[index] = item;
 
     notifyListeners();
-    await SQLHelper.updateItem(item
-        // item.id,
-        // item.name,
-        // item.address,
-        // item.type,
-        // item.furniture!,
-        // item.bedrooms,
-        // item.price,
-        // item.date,
-        // item.reporter,
-        // item.rented,
-        );
+    await SQLHelper.updateItem(item);
     // _refreshProperties();
   }
 
@@ -124,15 +113,15 @@ class PropertyManager extends ChangeNotifier {
   List<PropertyItem> searchProperty(String query) {
     final searched = _propertyItems
         .where((item) =>
-            RegExp('^$query.*', caseSensitive: false).hasMatch(item.name) ||
-            RegExp('^$query.*', caseSensitive: false).hasMatch(item.address) ||
-            RegExp('^$query.*', caseSensitive: false).hasMatch(item.city) ||
-            RegExp('^$query.*', caseSensitive: false).hasMatch(item.district) ||
-            RegExp('^$query.*', caseSensitive: false).hasMatch(item.ward) ||
-            RegExp('^$query.*', caseSensitive: false).hasMatch(item.type.toString()) ||
-            RegExp('^$query.*', caseSensitive: false).hasMatch(item.furniture.toString()) ||
-            RegExp('^$query.*', caseSensitive: false).hasMatch(item.reporter) ||
-            RegExp('^$query.*', caseSensitive: false).hasMatch(item.notes!))
+            RegExp('^.*$query.*', caseSensitive: false).hasMatch(item.name) ||
+            RegExp('^.*$query.*', caseSensitive: false).hasMatch(item.address) ||
+            RegExp('^.*$query.*', caseSensitive: false).hasMatch(item.city) ||
+            RegExp('^.*$query.*', caseSensitive: false).hasMatch(item.district) ||
+            RegExp('^.*$query.*', caseSensitive: false).hasMatch(item.ward) ||
+            RegExp('^.*$query.*', caseSensitive: false).hasMatch(item.type.toString()) ||
+            RegExp('^.*$query.*', caseSensitive: false).hasMatch(item.furniture.toString()) ||
+            RegExp('^.*$query.*', caseSensitive: false).hasMatch(item.reporter) ||
+            RegExp('^.*$query.*', caseSensitive: false).hasMatch(item.notes!))
         .toList();
     return searched;
   }

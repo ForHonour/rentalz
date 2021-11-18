@@ -72,7 +72,7 @@ class _SearchScreenState extends State<SearchScreen> {
             // _buildRentalLoader(context),
             // _buildFilterScreen(),
             // Listview PropertyTile(manager.propertyitem.id)
-            SizedBox(height: 12.0),
+            const SizedBox(height: 12.0),
             _buildSearchResults(searchTextController.text),
           ],
         ),
@@ -189,7 +189,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return Consumer<PropertyManager>(
       builder: (BuildContext context, manager, Widget? child) {
         // final searchedPropertyItems = manager.searchProperty(query);
-        // manager.searchProperty(query);
+        manager.refreshProperties();
         List<PropertyItem> searchedItems = manager.searchProperty(query);
 
         return SizedBox(
