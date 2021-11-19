@@ -1,5 +1,7 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:rentalz/components/author_card.dart';
+import 'package:flutter/services.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -23,7 +25,19 @@ class HomeScreen extends StatelessWidget {
           title: 'App Developer',
           imageProvider: AssetImage('assets/profile_pics/khang_dark.png'),
         ),
-        const SizedBox(height: 72),
+        const SizedBox(height: 16),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              ElevatedButton(
+                child: const Text('Ring & Vibrate Demo'),
+                onPressed: () => showAlert(context),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 12),
         Text(
           'Details',
           style: Theme.of(context).textTheme.bodyText2,
@@ -47,6 +61,58 @@ class HomeScreen extends StatelessWidget {
           ),
         )
       ],
+    );
+  }
+
+  void showAlert(BuildContext context) {
+    final bellring = AudioCache(
+      prefix: 'audio/',
+      fixedPlayer: AudioPlayer(),
+    );
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: SizedBox(
+          height: 145,
+          child: Column(
+            children: [
+              ElevatedButton(
+                child: const Text("Ring"),
+                onPressed: () {
+                  bellring.fixedPlayer!.stop();
+                  bellring.play(
+                    'assets/audio/bell_ring.mp3',
+                  );
+                  SystemSound.play(SystemSoundType.click);
+                },
+              ),
+              ElevatedButton(
+                child: const Text('Vibrate'),
+                onPressed: () => HapticFeedback.mediumImpact(),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    child: const Text('Cancel'),
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all(Colors.red),
+                    ),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                  TextButton(
+                    child: const Text('OK'),
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all(Colors.blue),
+                    ),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

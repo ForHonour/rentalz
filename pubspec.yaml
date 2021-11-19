@@ -43,6 +43,7 @@ dependencies:
   shared_preferences: ^2.0.7
   json_annotation: ^4.1.0
   sqflite: ^2.0.0+4
+  audioplayers: ^0.20.1
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +72,7 @@ flutter:
     - assets/rentalz_pics/
     - assets/dist/
     - assets/images/
+    - assets/audio/
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
