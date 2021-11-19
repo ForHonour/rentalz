@@ -1,8 +1,5 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:rentalz/components/property_tile.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:intl/intl.dart';
@@ -803,7 +800,7 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
               'Property Address',
               style: GoogleFonts.lato(fontSize: 24.0, fontWeight: FontWeight.bold),
             ),
-            Text(
+            const Text(
               '*',
               style: TextStyle(fontSize: 24.0, color: Colors.red),
             ),
@@ -840,7 +837,7 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
                     'City: ',
                     style: GoogleFonts.lato(fontSize: 18.0),
                   ),
-                  Text(
+                  const Text(
                     '*',
                     style: TextStyle(fontSize: 24.0, color: Colors.red),
                   ),
@@ -1165,56 +1162,6 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
     );
   }
 
-  Widget buildColorPicker(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            Container(
-              height: 50.0,
-              width: 10.0,
-              // color: _currentColor,
-            ),
-            const SizedBox(width: 8.0),
-            Text(
-              'Color',
-              style: GoogleFonts.lato(fontSize: 28.0),
-            ),
-          ],
-        ),
-        TextButton(
-          child: const Text('Select'),
-          onPressed: () {
-            // showDialog(
-            //   context: context,
-            //   builder: (context) {
-            //     return AlertDialog(
-            //       content: BlockPicker(
-            //         pickerColor: Colors.white,
-            //         onColorChanged: (Color color) {
-            //           setState(() {
-            //             _currentColor = color;
-            //           });
-            //         },
-            //       ),
-            //       actions: [
-            //         TextButton(
-            //           child: const Text('Save'),
-            //           onPressed: () {
-            //             Navigator.of(context).pop();
-            //           },
-            //         )
-            //       ],
-            //     );
-            //   },
-            // );
-          },
-        ),
-      ],
-    );
-  }
-
   Widget buildNumberOfBedroomsField() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1287,7 +1234,7 @@ class _PropertyItemScreenState extends State<PropertyItemScreen> {
                 style: GoogleFonts.lato(fontSize: 16.0),
                 decoration: InputDecoration.collapsed(
                   hintText: '\$' + _currentPriceValue.toInt().toString(),
-                  hintStyle: TextStyle(color: Colors.black),
+                  hintStyle: const TextStyle(color: Colors.black),
                 ),
 
                 textAlign: TextAlign.right,

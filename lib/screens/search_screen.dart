@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rentalz/components/components.dart';
@@ -7,9 +5,7 @@ import 'package:rentalz/components/custom_dropdown.dart';
 import 'package:rentalz/models/models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../sql_helper.dart';
 import 'property_item_screen.dart';
-import 'property_list_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -62,20 +58,17 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // color: Colors.white,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: <Widget>[
-            _buildSearchCard(),
-            // _buildRentalLoader(context),
-            // _buildFilterScreen(),
-            // Listview PropertyTile(manager.propertyitem.id)
-            const SizedBox(height: 12.0),
-            _buildSearchResults(searchTextController.text),
-          ],
-        ),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: <Widget>[
+          _buildSearchCard(),
+          // _buildRentalLoader(context),
+          // _buildFilterScreen(),
+          // Listview PropertyTile(manager.propertyitem.id)
+          const SizedBox(height: 12.0),
+          _buildSearchResults(searchTextController.text),
+        ],
       ),
     );
   }

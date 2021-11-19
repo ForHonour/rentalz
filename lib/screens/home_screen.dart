@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        AuthorCard(
+        const AuthorCard(
           authorName: 'Khang',
           title: 'App Developer',
           imageProvider: AssetImage('assets/profile_pics/khang_dark.png'),
@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 8),
-        Expanded(
+        const Expanded(
           child: DetailsCard(),
         ),
         const SizedBox(height: 16),
