@@ -17,24 +17,12 @@ class EmptyPropertyScreen extends StatelessWidget {
                 child: Image.asset('assets/rentalz_pics/no-prop.png'),
               ),
             ),
-
             const Text(
               'Looking for a place to post rental properties?\n'
               'Tap the + button to add them here!',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 16.0),
             ),
-            // MaterialButton(
-            //   textColor: Colors.white,
-            //   child: const Text('Browse Recipes'),
-            //   shape: RoundedRectangleBorder(
-            //     borderRadius: BorderRadius.circular(30.0),
-            //   ),
-            //   color: Colors.green,
-            //   onPressed: () {
-            //     Provider.of<TabManager>(context, listen: false).goToRecipes();
-            //   },
-            // ),
           ],
         ),
       ),

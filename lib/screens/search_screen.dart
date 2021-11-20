@@ -135,30 +135,6 @@ class _SearchScreenState extends State<SearchScreen> {
                 ],
               ),
             ),
-
-            // PopupMenuButton(
-            //   icon: const Icon(
-            //     Icons.arrow_drop_down,
-            //     color: Colors.grey,
-            //   ),
-            //   onSelected: (String value) {
-            //     searchTextController.text = value;
-            //     startSearch(searchTextController.text);
-            //   },
-            //   itemBuilder: (BuildContext context) {
-            //     return previousSearches.map((String value) {
-            //       return CustomDropdownMenuItem(
-            //           value: value,
-            //           text: value,
-            //           callback: () {
-            //             setState(() {
-            //               previousSearches.remove(value);
-            //               Navigator.pop(context);
-            //             });
-            //           });
-            //     }).toList();
-            //   },
-            // ),
           ],
         ),
       ),

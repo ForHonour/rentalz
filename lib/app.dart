@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rentalz/models/managers/property_manager.dart';
 import 'package:rentalz/theme/rentalz_theme.dart';
-
 import 'home.dart';
 import 'models/managers/tab_manager.dart';
 

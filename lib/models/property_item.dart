@@ -46,13 +46,6 @@ class PropertyItem {
     this.notes,
     this.rented = false,
   });
-  // String get propertyType => describeEnum(property_type);
-  // String get assetname => 'assets/images/$id-$propertyType.jpg';
-
-  // @override
-  // String toString() {
-  //   // return "$property_name (id=$id)";
-  // }
 
   PropertyItem copyWith({
     String? id,

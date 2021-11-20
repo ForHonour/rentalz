@@ -23,12 +23,6 @@ class SQLHelper {
 				rented INTEGER NOT NULL
       )
       """);
-
-    // await database.execute("""CREATE TABLE IF NOT EXISTS Notes(
-    //     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    // 		note TEXT NOT NULL,
-    //   )
-    //   """);
   }
 
   static Future<sql.Database> db() async {
@@ -41,23 +35,7 @@ class SQLHelper {
     );
   }
 
-  static Future<int> createItem(
-      // String uuid,
-      // String propertyName,
-      // // List<String> propertyAddress,
-      // String propertyCity,
-      // String propertyDistrict,
-      // String propertyWard,
-      // PropertyType propertyType,
-      // FurnitureType furnitureType,
-      // int bedrooms,
-      // int price,
-      // DateTime date,
-      // String reporter,
-      // bool rented,
-      // // List<String>? notes,
-
-      PropertyItem item) async {
+  static Future<int> createItem(PropertyItem item) async {
     final db = await SQLHelper.db();
 
     String propertyTypeString;
@@ -110,22 +88,7 @@ class SQLHelper {
     return db.query('properties', where: "id = ?", whereArgs: [id], limit: 1);
   }
 
-  static Future<int> updateItem(
-      // String id,
-      // String propertyName,
-      // // List<String> propertyAddress,
-      // String propertyCity,
-      // String propertyDistrict,
-      // String propertyWard,
-      // PropertyType propertyType,
-      // FurnitureType furnitureType,
-      // int bedrooms,
-      // int price,
-      // DateTime date,
-      // String reporter,
-      // bool rented,
-      // // List<String>? notes,
-      PropertyItem item) async {
+  static Future<int> updateItem(PropertyItem item) async {
     final db = await SQLHelper.db();
 
     String propertyTypeString;
